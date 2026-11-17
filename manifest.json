@@ -1,0 +1,15 @@
+{
+  "name": "4x4 Recovery Winch Capacity Calculator \u2014 GVWR, Mud & Snatch Block",
+  "short_name": "Winch Calc",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#140707",
+  "theme_color": "#dc2626",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

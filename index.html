@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4x4 Recovery Winch Capacity Calculator — GVWR, Mud & Snatch Block — Accurate Material Estimator</title>
+  <meta name="description" content="Calculate required electric recovery winch pulling capacity (lbs) factoring vehicle GVWR, mud suction, hill climb gradient, and snatch block pulleys.">
+  <link rel="canonical" href="https://sebiglesias.com.ar/winch-capacity-calculator/">
+  <meta name="theme-color" content="#dc2626">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="4x4 Recovery Winch Capacity Calculator — GVWR, Mud & Snatch Block">
+  <meta property="og:description" content="Calculate required electric recovery winch pulling capacity (lbs) factoring vehicle GVWR, mud suction, hill climb gradient, and snatch block pulleys.">
+  <meta property="og:url" content="https://sebiglesias.com.ar/winch-capacity-calculator/">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2BNDBQP0W7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2BNDBQP0W7');
+  </script>
+
+  <!-- Google AdSense -->
+  <meta name="google-adsense-account" content="ca-pub-3381238987477190">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3381238987477190" crossorigin="anonymous"></script>
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "4x4 Recovery Winch Capacity Calculator \u2014 GVWR, Mud & Snatch Block",
+    "url": "https://sebiglesias.com.ar/winch-capacity-calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate required electric recovery winch pulling capacity (lbs) factoring vehicle GVWR, mud suction, hill climb gradient, and snatch block pulleys.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the 1.5x rule for sizing an off-road recovery winch?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The gold standard formula established by off-road recovery trainers is:  \n**Minimum Winch Rating = Gross Vehicle Weight (GVW) \u00d7 1.5**  \nA Jeep or truck weighing 6,000 lbs requires at least a 9,000 lb to 10,000 lb rated winch. The extra 50% capacity accounts for thick clay mud suction, steep hill ascents, and power loss on upper rope drum layers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is Synthetic Rope safer than Steel Cable on a recovery winch?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If a steel cable snaps under load, it stores enormous kinetic energy and whips through the air like a lethal steel blade. Synthetic rope stores virtually zero kinetic recoil energy; if it breaks, it simply falls safely to the ground. Synthetic rope is also 80% lighter, floats on water, and doesn't develop razor-sharp wire burrs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does a snatch block double a winch's pulling capacity?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Running your winch line through a snatch block pulley anchored to a tree and hooking the line back to your own vehicle bumper creates a 2:1 mechanical advantage. The pulling force is doubled (turning a 10,000 lb winch into a 20,000 lb pulling system) while cutting the electric motor's workload and amp draw in half."
+        }
+      }
+    ]
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">🚙 Off-Road & Overland Recovery Standards</div>
+      <h1>4x4 Off-Road Recovery Winch Sizing Calculator</h1>
+      <p class="subtitle">Calculate rated winch line pull (1.5x GVWR rule), mud suction resistance, and 2:1 snatch block mechanical advantage.</p>
+    </header>
+
+    <!-- AdSense Top Banner -->
+    <div style="text-align:center; margin: 16px 0;">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-3381238987477190"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <main class="calc-grid">
+      <!-- Inputs Card -->
+      <form class="card" id="winch-capacity-calculator-form" onsubmit="event.preventDefault();">
+        <h2>📐 Vehicle Gross Weight & Terrain</h2>
+        
+        <div class="input-row">
+          <div class="form-group">
+            <label for="vehicleGvw">Gross Vehicle Weight (GVW) <span class="hint">Truck + Armor + Camping Gear</span></label>
+            <div class="input-wrap">
+              <input type="number" id="vehicleGvw" step="250" min="2500" value="6500" required>
+              <span class="input-suffix">lbs</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="terrainType">Stuck Terrain Condition</label>
+            <select id="terrainType">
+              <option value="1.0">Hard Packed Trail / Flat Gravel (Rolling Resistance)</option>
+              <option value="1.35">Sand / Soft Dirt (Wheel Depth Resistance)</option>
+              <option value="1.67" selected>Deep Clay Mud / Water Hub-Deep (Severe Suction)</option>
+              <option value="2.0">Belly High Mud / Submerged Over Bumper</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="form-group">
+            <label for="slopeAngle">Hill / Incline Angle</label>
+            <select id="slopeAngle">
+              <option value="0" selected>Flat Level Ground (0° Slope)</option>
+              <option value="15">Moderate Hill Climb (15° Incline)</option>
+              <option value="30">Steep Rock Ledge (30° Incline)</option>
+              <option value="45">Extreme Vertical Recovery (45° Incline)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="riggingStyle">Rigging Configuration</label>
+            <select id="riggingStyle">
+              <option value="1" selected>Single Line Direct Pull</option>
+              <option value="2">Double Line with Snatch Block (2:1 Advantage)</option>
+            </select>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Results Card -->
+      <div class="card">
+        <h2>🎯 Winch Size & Line Pull Required</h2>
+        
+        <div class="result-hero">
+          <div class="result-label">Recommended Minimum Winch Rating</div>
+          <div class="result-number" id="recWinchLbs">10,000 lbs</div>
+          <div class="result-label" style="color:#ffffff;">Standard 10k–12k Recovery Winch</div>
+          <div style="font-size:0.95rem; color:#fca5a5; margin-top:6px;" id="pullLoadSummary">Total Calculated Recovery Resistance: 10,855 lbs</div>
+        </div>
+
+        <div class="sub-hero-grid">
+          <div class="sub-hero-col">
+            <div class="sub-hero-label">Base 1.5x Safety Rule</div>
+            <div class="sub-hero-val" id="baseRule">9,750 lbs</div>
+            <div class="sub-hero-sub">Standard overland baseline</div>
+          </div>
+          <div class="sub-hero-col">
+            <div class="sub-hero-label">Line Pull on Winch Motor</div>
+            <div class="sub-hero-val" id="motorLoad">10,855 lbs</div>
+            <div class="sub-hero-sub">Single line load</div>
+          </div>
+        </div>
+
+        <div class="specs-grid">
+          <div class="spec-item">
+            <div class="spec-desc">Rope Recommendation</div>
+            <div class="spec-val" style="color:#4ade80;">Synthetic Rope (Safer)</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-desc">Snatch Block Pulley</div>
+            <div class="spec-val" id="snatchBlockRec">Recommended for Deep Mud</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-desc">Tree Saver Strap</div>
+            <div class="spec-val">3" × 10ft Polyester (30k lbs)</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-desc">Line Layer 1 vs Layer 4</div>
+            <div class="spec-val">Loses 25% Pull Power on Layer 4</div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Amazon Supplies Box -->
+    <section class="supplies-card">
+      <h3>🛠️ Recommended Tools, Hardware & Building Supplies</h3>
+      <div class="supplies-grid">
+        <div class="supply-item">
+          <div>
+            <div class="supply-title">WARN 103253 VR EVO 10-S Electric 12V Winch with Synthetic Rope</div>
+            <div class="supply-desc">IP68 waterproof electric winch with 10,000 lb capacity and wireless remote control.</div>
+          </div>
+          <a href="https://www.amazon.com/s?k=warn+vr+evo+10s+synthetic+winch&tag=sebiglesias-20" target="_blank" rel="nofollow noopener" class="btn-amazon">Check on Amazon →</a>
+        </div>
+        <div class="supply-item">
+          <div>
+            <div class="supply-title">ARB 9000 Heavy Duty Snatch Block Pulley (20,000 lb)</div>
+            <div class="supply-desc">Doubles winch pulling capacity and enables multi-angle anchor pulls without cable kinking.</div>
+          </div>
+          <a href="https://www.amazon.com/s?k=arb+snatch+block+9000&tag=sebiglesias-20" target="_blank" rel="nofollow noopener" class="btn-amazon">Check on Amazon →</a>
+        </div>
+        <div class="supply-item">
+          <div>
+            <div class="supply-title">Rhino USA Heavy-Duty Tree Saver Winch Strap (3" x 10ft 31,518 lb)</div>
+            <div class="supply-desc">Triple reinforced loop ends protect tree bark while serving as an indestructible rigging anchor.</div>
+          </div>
+          <a href="https://www.amazon.com/s?k=rhino+usa+tree+saver+strap&tag=sebiglesias-20" target="_blank" rel="nofollow noopener" class="btn-amazon">Check on Amazon →</a>
+        </div>
+        <div class="supply-item">
+          <div>
+            <div class="supply-title">Rhino USA Synthetic Soft Shackle Set (1/2" 45,000 lb Breaking Strength)</div>
+            <div class="supply-desc">Replaces dangerous heavy steel D-rings with ultra-lightweight high-molecular polyethylene rope.</div>
+          </div>
+          <a href="https://www.amazon.com/s?k=rhino+usa+synthetic+soft+shackle&tag=sebiglesias-20" target="_blank" rel="nofollow noopener" class="btn-amazon">Check on Amazon →</a>
+        </div>
+      </div>
+      <p style="font-size:0.75rem; color:#94a3b8; margin-top:14px; margin-bottom:0; text-align:center;">
+        ⚖️ <em>Affiliate Notice: As an Amazon Associate, this site earns from qualifying purchases at no additional cost to you. We strictly link to trade-grade construction tools, hardware, and safety materials.</em>
+      </p>
+    </section>
+
+    <!-- FAQ Section for SEO -->
+    <section class="faq-section">
+      <h2 style="font-size:1.35rem; color:#ffffff; margin-bottom:16px;">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <div class="faq-q">What is the 1.5x rule for sizing an off-road recovery winch?</div>
+        <div class="faq-a">The gold standard formula established by off-road recovery trainers is:  
+**Minimum Winch Rating = Gross Vehicle Weight (GVW) × 1.5**  
+A Jeep or truck weighing 6,000 lbs requires at least a 9,000 lb to 10,000 lb rated winch. The extra 50% capacity accounts for thick clay mud suction, steep hill ascents, and power loss on upper rope drum layers.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Why is Synthetic Rope safer than Steel Cable on a recovery winch?</div>
+        <div class="faq-a">If a steel cable snaps under load, it stores enormous kinetic energy and whips through the air like a lethal steel blade. Synthetic rope stores virtually zero kinetic recoil energy; if it breaks, it simply falls safely to the ground. Synthetic rope is also 80% lighter, floats on water, and doesn't develop razor-sharp wire burrs.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How does a snatch block double a winch's pulling capacity?</div>
+        <div class="faq-a">Running your winch line through a snatch block pulley anchored to a tree and hooking the line back to your own vehicle bumper creates a 2:1 mechanical advantage. The pulling force is doubled (turning a 10,000 lb winch into a 20,000 lb pulling system) while cutting the electric motor's workload and amp draw in half.</div>
+      </div>
+    </section>
+
+    <!-- Bottom AdSense Banner -->
+    <div style="text-align:center; margin: 32px 0;">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-3381238987477190"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <footer>
+      <p>© 2026 <a href="https://sebiglesias.com.ar/">sebiglesias.com.ar</a> · 4x4 Recovery Winch Capacity Calculator — GVWR, Mud & Snatch Block. Educational and trade reference tool.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
